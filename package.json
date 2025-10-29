@@ -1,0 +1,23 @@
+{
+    "name": "authentication-boilerplate",
+    "version": "1.0.0",
+    "scripts": {
+        "install-all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+        "build": "npm --prefix backend run build && npm --prefix frontend run build",
+        "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
+    },
+    "keywords": [
+        "authentication",
+        "boilerplate",
+        "node.js",
+        "typescript",
+        "express",
+        "mongo",
+        "react"
+    ],
+    "author": "Kutay Akkaya",
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    },
+    "license": "MIT"
+}
