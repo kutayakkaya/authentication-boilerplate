@@ -1,0 +1,33 @@
+{
+    "name": "authentication-boilerplate-backend",
+    "version": "1.0.0",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsx watch src/server.ts",
+        "start": "node dist/server.js"
+    },
+    "keywords": [
+        "authentication",
+        "boilerplate",
+        "node.js",
+        "typescript",
+        "express",
+        "mongo"
+    ],
+    "author": "Kutay Akkaya",
+    "license": "MIT",
+    "type": "commonjs",
+    "dependencies": {
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
+        "mongoose": "^8.19.2"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.5",
+        "@types/node": "^24.9.2",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.20.6",
+        "typescript": "^5.9.3"
+    }
+}
