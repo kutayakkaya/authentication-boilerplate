@@ -19,24 +19,24 @@ type RefreshTokenPayload = CommonPayload & {
 const createAccessToken = (payload: CommonPayload) => {
     const accessPayload: AccessTokenPayload = {
         ...payload,
-        type: "access",
+        type: "access"
     };
 
     const secret: Secret = config.accessTokenSecret;
     return jwt.sign(accessPayload, secret, {
-        expiresIn: '15m',
+        expiresIn: '15m'
     });
 };
 
 const createRefreshToken = (payload: CommonPayload) => {
     const refreshPayload: RefreshTokenPayload = {
         ...payload,
-        type: "refresh",
+        type: "refresh"
     };
 
     const secret: Secret = config.refreshTokenSecret;
     return jwt.sign(refreshPayload, secret, {
-        expiresIn: '7d',
+        expiresIn: '7d'
     });
 };
 
