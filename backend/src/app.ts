@@ -3,6 +3,8 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import config from "./config/env";
+import authRoutes from "./routes/auth-routes";
+import userRoutes from "./routes/user-routes";
 import errorHandler from "./middlewares/error-handler";
 
 const app = express();
@@ -32,6 +34,9 @@ app.get("/api/health", (_req, res) => {
         environment: config.nodeEnv
     });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((_req, res) => {
     res.status(404).json({ message: "Resource not found." });
