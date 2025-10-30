@@ -18,7 +18,7 @@ app.use(
             "X-Requested-With",
             "Content-Type",
             "Accept",
-            "Authorization",
+            "Authorization"
         ],
     })
 );
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: '10kb' }));
 
 app.get("/api/health", (_req, res) => {
-    res.json({
+    res.status(200).json({
         status: "ok",
         environment: config.nodeEnv
     });
