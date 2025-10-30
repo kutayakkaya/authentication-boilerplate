@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/error-handler";
 
 const app = express();
 
+app.disable("x-powered-by");
 app.use(helmet());
 app.use(
     cors({
@@ -19,7 +20,7 @@ app.use(
             "Content-Type",
             "Accept",
             "Authorization"
-        ],
+        ]
     })
 );
 app.use(cookieParser());
