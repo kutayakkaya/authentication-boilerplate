@@ -81,7 +81,6 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         const tokenId = generateTokenId();
         const tokens = buildAuthResponse(user._id.toString(), email, tokenId);
 
-        user.refreshTokens.splice(0, user.refreshTokens.length);
         user.refreshTokens.push({
             tokenId,
             hashedToken: hashToken(tokens.refreshToken),

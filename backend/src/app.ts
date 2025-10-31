@@ -6,10 +6,12 @@ import config from "./config/env";
 import authRoutes from "./routes/auth-routes";
 import userRoutes from "./routes/user-routes";
 import errorHandler from "./middlewares/error-handler";
+import { globalRateLimiter } from "./middlewares/rate-limiters";
 
 const app = express();
 
 app.disable("x-powered-by");
+app.use(globalRateLimiter);
 app.use(helmet());
 app.use(
     cors({

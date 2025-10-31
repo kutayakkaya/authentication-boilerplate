@@ -10,7 +10,7 @@ const getCurrentUser = async (req: Request, res: Response) => {
         user: {
             id: req.authenticatedUser.id,
             email: req.authenticatedUser.email
-        },
+        }
     });
 };
 
