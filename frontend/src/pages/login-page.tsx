@@ -1,0 +1,99 @@
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useAuth } from "../auth-context";
+import { loginSchema } from "../validations/auth-schemas";
+
+type FormState = {
+    email: string;
+    password: string;
+};
+
+const LoginPage = () => {
+    const auth = useAuth();
+    const navigate = useNavigate();
+    const [form, setForm] = useState<FormState>({ email: "", password: "" });
+    const [submitting, setSubmitting] = useState(false);
+    const [formErrors, setFormErrors] = useState<Partial<FormState>>({});
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setServerError(null);
+        setFormErrors({});
+
+        const result = loginSchema.safeParse(form);
+        if (!result.success) {
+            const nextErrors: Partial<FormState> = {};
+            result.error.issues.forEach((issue) => {
+                const field = issue.path[0];
+                if (field === "email" || field === "password") {
+                    nextErrors[field] = issue.message;
+                }
+            });
+            setFormErrors(nextErrors);
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            await auth.login(result.data);
+            navigate("/dashboard", { replace: true });
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                setServerError(error.response?.data?.message ?? "Unable to login.");
+            } else {
+                setServerError("Unable to login.");
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="page">
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Email
+                    <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={(event) =>
+                            setForm((prev) => ({ ...prev, email: event.target.value }))
+                        }
+                        autoComplete="email"
+                        required
+                    />
+                </label>
+                {formErrors.email ? <div className="error">{formErrors.email}</div> : null}
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        name="password"
+                        value={form.password}
+                        onChange={(event) =>
+                            setForm((prev) => ({ ...prev, password: event.target.value }))
+                        }
+                        autoComplete="current-password"
+                        required
+                    />
+                </label>
+                {formErrors.password ? <div className="error">{formErrors.password}</div> : null}
+                <button type="submit" disabled={submitting}>
+                    {submitting ? "Signing in..." : "Sign in"}
+                </button>
+                {serverError ? <div className="error">{serverError}</div> : null}
+            </form>
+            <div className="link-row">
+                <span>Need an account?</span>
+                <Link to="/register">Register</Link>
+            </div>
+        </div>
+    );
+};
+
+export default LoginPage;
