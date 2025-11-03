@@ -12,6 +12,7 @@
 		"boilerplate",
 		"node.js",
 		"typescript",
+		"vite",
 		"react"
 	],
 	"author": "Kutay Akkaya",
