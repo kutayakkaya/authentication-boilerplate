@@ -21,12 +21,12 @@ out/
 *.tsbuildinfo
 
 # Vite / React
-client/dist/
-client/.vite/
-client/.temp/
+frontend/dist/
+frontend/.vite/
+frontend/.temp/
 
 # Express / Backend
-server/build/
-server/dist/
-server/.cache/
-server/tmp/
+backend/build/
+backend/dist/
+backend/.cache/
+backend/tmp/

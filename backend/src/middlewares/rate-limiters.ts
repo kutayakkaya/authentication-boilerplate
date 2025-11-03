@@ -1,4 +1,4 @@
-import rateLimit from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 
 const globalRateLimiter = rateLimit({
     windowMs: 60 * 1000,
@@ -13,8 +13,11 @@ const globalRateLimiter = rateLimit({
 const registerRateLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     limit: 1,
-    keyGenerator: (req) => `${req.ip}:${req.get("user-agent") || "unknown"}`,
-    skipFailedRequests: true,
+    keyGenerator: (req) => {
+        const ip = req.ip || req.socket.remoteAddress || 'unknown';
+        const ipKey = ipKeyGenerator(ip);
+        return `${ipKey}:${req.get("user-agent") || "unknown"}`;
+    },
     standardHeaders: "draft-7",
     legacyHeaders: false,
     handler: (_req, res) => {

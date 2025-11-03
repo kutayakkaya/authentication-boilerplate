@@ -20,6 +20,7 @@ const buildAuthResponse = (userId: string, email: string, tokenId: string) => {
     return { accessToken, refreshToken };
 };
 
+// TO-DO: Create a "services" folder. Import the appropriate content into the "auth-service.ts" file.
 const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
